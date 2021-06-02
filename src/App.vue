@@ -45,7 +45,6 @@ export default {
   methods:{
     openModal(){
       this.isShowModal = !this.isShowModal
-      console.log(this.isShowModal)
     },
     changeIsShow(){
       this.isShowModal = false

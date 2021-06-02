@@ -27,7 +27,7 @@
               small
               color="secondary"
               rounded
-              @click="showEdit"
+              @click="showEdit()"
             >
               編集
             </v-btn>
@@ -35,7 +35,7 @@
               small
               color="primary"
               rounded
-              @click="deleteTodo"
+              @click="deleteTodo()"
             >
               削除
             </v-btn>
@@ -77,8 +77,8 @@
         },
         showEdit(){
           this.$emit('custom-edit',{todoIndex: this.todoIndex})
-          console.log(`${this.todoIndex}の編集をクリック`)
-          // TodoEditを表示させる（board.vueに$emitで値を送る）
+          // this.titleで値が取れる。todoEdit.vueに値を送る
+          console.log(this.title)
         }
 
       }

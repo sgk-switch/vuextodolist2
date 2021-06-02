@@ -10,9 +10,10 @@
       />
 
       <!-- 修正モーダル -->
-      <todo-edit 
+      <todo-edit
         v-show="isShowEdit"
         @custom-edit="showEdit"
+        @custom-close-edit="closeEdit"
       />
 
         <div class="todo-index d-flex flex-wrap ml-5">
@@ -22,6 +23,7 @@
             :deadLine = "item.deadLine"
             :status = "item.status"
             :todoIndex="index"
+            @custom-edit="showEdit"
           />
         </div>  
     </main>
@@ -49,7 +51,7 @@
 
       data(){
         return{
-          isShowEdit:false
+          isShowEdit:false,
         }
       },
 
@@ -71,11 +73,12 @@
         hideModal(){
           this.$emit('custom-close')
         },
-        showEdit(e){
-          this.isShowEdit = true
-          console.log(e.todoIndex)
-          console.log(this.isShowEdit)
+        showEdit(){
+          this.isShowEdit = true;
         },
+        closeEdit(){
+          this.isShowEdit = false;
+        }
       },
     }
 </script>

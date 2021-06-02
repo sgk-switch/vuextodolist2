@@ -3,8 +3,7 @@
   >
     <v-card 
       class="modal-body"
-    >
-      <!--  
+    > 
 			<form class="add-todo ml-5 mb-10" @submit.prevent="editTodo">
 
 				<v-text-field
@@ -41,8 +40,7 @@
 				<v-row>
 					<v-col cols='6'>
 						<v-select
-								:items="items"
-								label="Standard"
+								:status="status"
 						>
 						</v-select>
 					</v-col>
@@ -62,7 +60,7 @@
 								color="gray"
 								small
 								rounded
-								@click="hideModal()"
+								@click="hideEdit()"
 							>
 								キャンセル
 							</v-btn>
@@ -70,7 +68,6 @@
 					</v-col>
 				</v-row>
       </form> 
-			-->
     </v-card>
   </div>
 </template>
@@ -79,10 +76,13 @@
 <script>
 	import { mapState } from 'vuex'
 
-  export default {
+	export default {
 		name:'todo-edit',
-		props:{
 
+		data() {
+			return {
+				menu: false,
+			}
 		},
 
 		computed:{
@@ -90,14 +90,14 @@
 				'todos'
 			]),
 		},
-			
+	
     methods:{
-			ediTodo(){
-				this.$store.dispatch('editTodo',{todoIndex: this.todoIndex})
+			editTodo(){
+				this.$store.dispatch('editTodo',{todoIndex: this.todoIndex})		
 			},
 
-			hideModal(){
-				this.$emit('custom-modal')
+			hideEdit(){
+				this.$emit('custom-close-edit')
 			}
 
     }
