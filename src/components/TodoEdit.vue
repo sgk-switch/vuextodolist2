@@ -5,11 +5,10 @@
       class="modal-body"
     > 
 			<form class="add-todo ml-5 mb-10" @submit.prevent="editTodo">
-
 				<v-text-field
 					class="mr-5 mb-5"
 					label="Todo名"
-					v-model="title"
+					v-model="editItem.title"
 				>
 				</v-text-field>
 
@@ -23,7 +22,7 @@
 				>
 					<template v-slot:activator="{ on, attrs }">
 						<v-text-field
-							v-model="deadLine"
+							v-model="editItem.deadLine"
 							label="期日"
 							prepend-icon="mdi-calendar"
 							readonly
@@ -32,7 +31,7 @@
 						></v-text-field>
 					</template>
 					<v-date-picker
-						v-model="deadLine"
+						v-model="editItem.deadLine"
 						@input="menu = false"
 					></v-date-picker>
 				</v-menu>
@@ -40,7 +39,8 @@
 				<v-row>
 					<v-col cols='6'>
 						<v-select
-								:status="status"
+							v-model="editItem.status"
+							:items="status"
 						>
 						</v-select>
 					</v-col>
@@ -52,9 +52,9 @@
 								color="primary"
 								small
 								rounded
-								@click="editTodo()"
+								@click="updateTodo()"
 							>
-								更新する
+								更新
 							</v-btn>
 							<v-btn
 								color="gray"
@@ -74,26 +74,25 @@
 
 
 <script>
-	import { mapState } from 'vuex'
-
 	export default {
 		name:'todo-edit',
 
 		data() {
 			return {
 				menu: false,
+				status:['未対応','対応中','完了']
 			}
 		},
-
+		
 		computed:{
-			...mapState([
-				'todos'
-			]),
+			editItem(){
+				return this.$store.state.editItem
+			}
 		},
 	
     methods:{
-			editTodo(){
-				this.$store.dispatch('editTodo',{todoIndex: this.todoIndex})		
+			updateTodo(){
+				this.$store.dispatch('updateTodo',{todoIndex: this.todoIndex})		
 			},
 
 			hideEdit(){

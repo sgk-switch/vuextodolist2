@@ -26,7 +26,13 @@ const store = new Vuex.Store({
         deadLine:2021-5-31,
         status: '対応中'
       },
-    ]
+    ],
+    editItem:{
+      id:'',
+      title:'',
+      deadLine:'',
+      status:'',
+    }
   },
   mutations: {
     addTodo(state, payload){
@@ -35,7 +41,13 @@ const store = new Vuex.Store({
     deleteTodo(state, payload){
       state.todos.splice(payload.listIndex, 1)
     },
-    // editTodo(state, payload){
+    editTodo(state,payload){
+      state.editItem.id = payload.todoIndex
+      state.editItem.title = payload.title
+      state.editItem.deadLine = payload.deadLine
+      state.editItem.status = payload.status
+    }
+    // updateTodo(state, payload){
     //  修正された値をstateに上書きする処理
     // }
   },
@@ -46,8 +58,12 @@ const store = new Vuex.Store({
     deleteTodo(context,payload){
       context.commit('deleteTodo', payload)
     },
-    editTodo(context, payload){
-      context.commit('editTodo', payload)
+    // 編集するTodoのデータをstate.editItemに保存
+    editTodo(context, payload) {
+      context.commit('editTodo',payload)
+    },
+    updateTodo(context, payload){
+      context.commit('updateTodo', payload)
     }
   },
   getters: {

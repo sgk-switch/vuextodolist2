@@ -76,11 +76,24 @@
           }
         },
         showEdit(){
+          // 編集モーダルを表示する
           this.$emit('custom-edit',{todoIndex: this.todoIndex})
-          // this.titleで値が取れる。todoEdit.vueに値を送る
-          console.log(this.title)
-        }
 
+          // クリックされたTodoの各データを$storeに保存
+          // let editData = {
+          //   title: this.title,
+          //   todoIndex: this.todoIndex,
+          //   deadLine: this.deadLine,
+          //   status: this.status,
+          // }
+          
+          this.$store.dispatch('editTodo',{
+            title: this.title,
+            todoIndex: this.todoIndex,
+            deadLine: this.deadLine,
+            status: this.status
+          })
+        }
       }
     }
 
