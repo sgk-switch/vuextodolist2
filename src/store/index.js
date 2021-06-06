@@ -8,54 +8,55 @@ const savedTodos = localStorage.getItem('todo-list')
 const store = new Vuex.Store({
   state: {
     todos:savedTodos ? JSON.parse(savedTodos):[
-      {
-        id:1,
-        title: 'test1',
-        deadLine:2021-5-31,
-        status: '未対応'
-      },
-      {
-        id:2,
-        title: 'test2',
-        deadLine:2021-5-31,
-        status: '未対応'
-      },
-      {
-        id:3,
-        title: 'test3',
-        deadLine:2021-5-31,
-        status: '対応中'
-      },
     ],
+    
+    todoNum:0,
+
     editItem:{
       id:'',
       title:'',
       deadLine:'',
+      todoIndex:'',
       status:'',
     }
   },
   mutations: {
     addTodo(state, payload){
-      state.todos.push({id: payload.id, title: payload.title, deadLine: payload.deadLine, status:'未対応'})
+      state.todos.push({id:state.todoNum, title: payload.title, deadLine: payload.deadLine, index:payload.todoIndex,status:'未対応'})
+      state.todoNum++
     },
-    deleteTodo(state, payload){
-      state.todos.splice(payload.listIndex, 1)
+    // 削除ができなくなったとき
+    // deleteTodo(state){
+    //   state.todos.splice(0, 1)
+    // },
+    deleteTodo(state,payload){
+      // 配列の順番とidは異なる
+      state.todos.splice(payload.todoIndex, 1)
     },
     editTodo(state,payload){
-      state.editItem.id = payload.todoIndex
+      // state.editItemに更新前のデータを保存
+      state.editItem.id = payload.id
       state.editItem.title = payload.title
       state.editItem.deadLine = payload.deadLine
-      state.editItem.status = payload.status
+      state.editItem.todoIndex = payload.todoIndex
+      state.editItem.status = payload.status 
+
+      console.log(`storeの値:${state.editItem}`)
+    },
+
+    updateTodo(state){
+      // 変更前のtodoを削除し、変更後のtodoを変更前と同じ場所に追加
+      // 下記の状態だとidがうまく表示されていない。さらに、続けて編集しようとすると他のTodoが変わってしまう
+      state.todos.splice(state.editItem.todoIndex,1,state.editItem)
+      // console.log(state.editItem)
     }
-    // updateTodo(state, payload){
-    //  修正された値をstateに上書きする処理
-    // }
   },
+
   actions: {
     addTodo(context, payload){
       context.commit('addTodo',payload)
     },
-    deleteTodo(context,payload){
+    deleteTodo(context, payload){
       context.commit('deleteTodo', payload)
     },
     // 編集するTodoのデータをstate.editItemに保存

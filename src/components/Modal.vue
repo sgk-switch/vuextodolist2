@@ -47,7 +47,7 @@
               rounded
               @click="addTodo()"
             >
-              追加する
+              追加
             </v-btn>
             <v-btn
               color="gray"
@@ -76,7 +76,7 @@
 
     methods:{
         addTodo(){
-          this.$store.dispatch('addTodo',{title: this.title,deadLine: this.deadLine})
+          this.$store.dispatch('addTodo',{title: this.title,deadLine: this.deadLine,todoIndex:this.todoIndex})
           this.title = ''
           this.deadLine = ''
           this.hideModal()

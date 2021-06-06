@@ -17,7 +17,7 @@
       />
 
         <div class="todo-index d-flex flex-wrap ml-5">
-          <todo v-for="(item, index) in todos"
+          <todo v-for="(item,index) in todos"
             :key="item.id"
             :title="item.title"
             :deadLine = "item.deadLine"

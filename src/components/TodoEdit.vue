@@ -85,6 +85,7 @@
 		},
 		
 		computed:{
+			//storeから選択したtodoのデータを取得
 			editItem(){
 				return this.$store.state.editItem
 			}
@@ -92,7 +93,18 @@
 	
     methods:{
 			updateTodo(){
-				this.$store.dispatch('updateTodo',{todoIndex: this.todoIndex})		
+				// ①編集したtodoのデータはthis.editItemで取得できる
+				// ②storeに保存
+				// エラーの原因更新をクリックするとidが-1になっている
+				this.$store.dispatch('updateTodo',{
+					id:this.id,
+					title:this.title,
+					todoIndex: this.todoIndex,
+					deadLine:this.deadLine,
+					status:this.status
+					})
+				console.log(this.editItem.id)		
+				this.hideEdit()
 			},
 
 			hideEdit(){

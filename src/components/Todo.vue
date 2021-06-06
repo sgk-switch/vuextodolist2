@@ -51,6 +51,10 @@
 <script>
     export default {
       props:{
+        id:{
+          type: Number,
+          required: false
+        },
         title: {
           type: String,
           required: true
@@ -79,20 +83,16 @@
           // 編集モーダルを表示する
           this.$emit('custom-edit',{todoIndex: this.todoIndex})
 
-          // クリックされたTodoの各データを$storeに保存
-          // let editData = {
-          //   title: this.title,
-          //   todoIndex: this.todoIndex,
-          //   deadLine: this.deadLine,
-          //   status: this.status,
-          // }
-          
+          // storeにデータを保存
           this.$store.dispatch('editTodo',{
+            id: this.id,
             title: this.title,
             todoIndex: this.todoIndex,
             deadLine: this.deadLine,
             status: this.status
           })
+
+          console.log(`todo.vueの値:${this.id}`)
         }
       }
     }
