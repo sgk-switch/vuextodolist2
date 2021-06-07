@@ -10,29 +10,24 @@ const store = new Vuex.Store({
     todos:savedTodos ? JSON.parse(savedTodos):[
     ],
     
-    todoNum:0,
-
     editItem:{
       id:'',
       title:'',
       deadLine:'',
       todoIndex:'',
       status:'',
-    }
+    },
   },
   mutations: {
     addTodo(state, payload){
-      state.todos.push({id:state.todoNum, title: payload.title, deadLine: payload.deadLine, index:payload.todoIndex,status:'未対応'})
-      state.todoNum++
-    },
-    // 削除ができなくなったとき
-    // deleteTodo(state){
-    //   state.todos.splice(0, 1)
-    // },
+      state.todos.push({id: payload.id, title: payload.title, deadLine: payload.deadLine,status:'未対応'})
+    }, 
+    
     deleteTodo(state,payload){
       // 配列の順番とidは異なる
       state.todos.splice(payload.todoIndex, 1)
     },
+
     editTodo(state,payload){
       // state.editItemに更新前のデータを保存
       state.editItem.id = payload.id
@@ -40,15 +35,25 @@ const store = new Vuex.Store({
       state.editItem.deadLine = payload.deadLine
       state.editItem.todoIndex = payload.todoIndex
       state.editItem.status = payload.status 
-
-      console.log(`storeの値:${state.editItem}`)
+      console.log(state.editItem)
     },
 
     updateTodo(state){
-      // 変更前のtodoを削除し、変更後のtodoを変更前と同じ場所に追加
-      // 下記の状態だとidがうまく表示されていない。さらに、続けて編集しようとすると他のTodoが変わってしまう
-      state.todos.splice(state.editItem.todoIndex,1,state.editItem)
-      // console.log(state.editItem)
+      // 編集したtodoのidを取得
+      let updateId = state.editItem.id
+      
+      //updateIdを持つtodoをtodosから探す
+      const updateItem = state.todos.find((todo)=> 
+        todo.id == updateId)
+      console.log(updateItem)
+      
+      //updateIdを持つtodoのtodoIndexを取得
+      const updateIndex = state.todos.indexOf(updateItem)
+      console.log(updateIndex)
+
+      //編集前のtodoとeditItemを入れ替える
+      state.todos.splice(updateIndex,1,state.editItem)
+      state.editItem = {}
     }
   },
 

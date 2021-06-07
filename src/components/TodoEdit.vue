@@ -93,9 +93,6 @@
 	
     methods:{
 			updateTodo(){
-				// ①編集したtodoのデータはthis.editItemで取得できる
-				// ②storeに保存
-				// エラーの原因更新をクリックするとidが-1になっている
 				this.$store.dispatch('updateTodo',{
 					id:this.id,
 					title:this.title,
@@ -103,7 +100,6 @@
 					deadLine:this.deadLine,
 					status:this.status
 					})
-				console.log(this.editItem.id)		
 				this.hideEdit()
 			},
 

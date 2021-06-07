@@ -68,6 +68,7 @@
   export default {
     data(){
         return{
+          id:0,
           title:'',
           deadLine: new Date().toISOString().substr(0, 10),
           menu: false,
@@ -76,7 +77,8 @@
 
     methods:{
         addTodo(){
-          this.$store.dispatch('addTodo',{title: this.title,deadLine: this.deadLine,todoIndex:this.todoIndex})
+          this.$store.dispatch('addTodo',{id:this.id,title: this.title,deadLine: this.deadLine})
+          this.id++,
           this.title = ''
           this.deadLine = ''
           this.hideModal()

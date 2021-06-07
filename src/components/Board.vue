@@ -18,12 +18,13 @@
 
         <div class="todo-index d-flex flex-wrap ml-5">
           <todo v-for="(item,index) in todos"
-            :key="item.id"
-            :title="item.title"
+            :key = "item.id"
+            :id = "item.id"
+            :title = "item.title"
             :deadLine = "item.deadLine"
             :status = "item.status"
-            :todoIndex="index"
-            @custom-edit="showEdit"
+            :todoIndex = "index"
+            @custom-edit = "showEdit"
           />
         </div>  
     </main>
@@ -60,6 +61,7 @@
           'todos'
         ]),
         
+        // Todo新規作成モーダルの表示
         getModalShow:{
           get(){
             const getIsShowModal = this.isShowModal
@@ -68,14 +70,16 @@
         },
       },
 
-      // Todo新規作成またはキャンセルでモーダルを消す
       methods:{
+        // Todo新規作成またはキャンセルでモーダルを消す
         hideModal(){
           this.$emit('custom-close')
         },
+        // Todo編集モーダルの表示
         showEdit(){
           this.isShowEdit = true;
         },
+        // Todo編集モーダルを消す
         closeEdit(){
           this.isShowEdit = false;
         }

@@ -91,8 +91,7 @@
             deadLine: this.deadLine,
             status: this.status
           })
-
-          console.log(`todo.vueの値:${this.id}`)
+          console.log(this.id)
         }
       }
     }
